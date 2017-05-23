@@ -4,7 +4,6 @@ import {
   asset,
   Pano,
   Plane,
-  CylindricalPanel,
   Text,
   View,
 } from 'react-vr';
@@ -27,86 +26,29 @@ export default class wall_ui extends React.Component {
           userName: status.user.name,
           userScreenName: status.user.screen_name,
           text: status.text,
+          metadata: {
+            retweet_count: status.retweet_count,
+            favorite_count: status.favorite_count
+          },
         }))
       })
     })
   }
-  //
-  // // render() {
-  // //   const { buzzList, positions } = this.state
-  // //   let buzzBoxRotation = 0
-  // //   return (
-  // //     <View>
-  // //       <Pano source={asset('chess-world.jpg')} />
-  // //         <View style={{ flexDirection: 'row' }}>
-  // //           { buzzList && buzzList.map((buzz, index) => {
-  // //               const buzzBox = (
-  // //                 <BuzzBox
-  // //                   key={buzz.id_str}
-  // //                   text={buzz.text}
-  // //                   position={positions[index]}
-  // //                   user={{ name: buzz.userName, screen_name: buzz.userScreenName, profileImageUrl: buzz.profileImageUrl }}
-  // //                   rotateY={buzzBoxRotation}
-  // //                 />
-  // //               )
-  // //               buzzBoxRotation -= 45
-  // //               return buzzBox
-  // //           })}
-  // //         </View>
-  // //     </View>
-  // //   );
-  // // }
-  // // getBuzzColumn = (buzzList) => {
-  // //
-  // // }
-  // //
-  // getBuzzColumns = () => {
-  //   const { buzzList } = this.state
-  //   let buzzColumns = []
-  //   let _buzzList = buzzList
-  //   while(_buzzList.length > 0) {
-  //     if (_buzzList.length > 6) {
-  //       console.log('1')
-  //       buzzColumns.push({
-  //         columns: _buzzList[0,6],
-  //       })
-  //       _buzzList = _buzzList.slice(0,7)
-  //     } else {
-  //       console.log('2')
-  //       buzzColumns.push({
-  //         columns: _buzzList,
-  //       })
-  //       _buzzList = []
-  //     }
-  //   }
-  //   console.log(buzzColumns)
-  //   const text = 'adsasdads asd asdja sdfhkjsn sdfjksdjfksd js dflksdjf sjdkfjsdf sjdfksjdfklsdf sjdflksjdf'
-  //   return (
-  //     <View style={{ flexDirection: 'row' }}>
-  //       { buzzColumns.map((buzzColumnsItem, index) => {
-  //         return (
-  //           <View key={`${buzzColumn}${index}`}>
-  //             <Box text={text} />
-  //           </View>
-  //         )
-  //       })}
-  //     </View>
-  //   )
-  // }
 
   render() {
     const text = 'adsasdads asd asdja sdfhkjsn sdfjksdjfksd js dflksdjf sjdkfjsdf sjdfksjdfklsdf sjdflksjdf'
     const { buzzList } = this.state
     return(
       <View s>
-        <Pano source={asset('chess-world.jpg')} />
-        <View style={{ width: '100%', flexDirection: 'column', height: 7, flexWrap: 'wrap' }}>
+        <Pano source={asset('back.jpg')} />
+        <View style={{ width: '100%', flexDirection: 'column', height: 10, flexWrap: 'wrap' }}>
           { buzzList && buzzList.map((buzz, index) => {
               return (
                 <BuzzBox
                   key={buzz.id_str}
                   text={buzz.text}
                   user={{ name: buzz.userName, screen_name: buzz.userScreenName, profileImageUrl: buzz.profileImageUrl }}
+                  metadata={buzz.metadata}
                 />
               )
           })}
