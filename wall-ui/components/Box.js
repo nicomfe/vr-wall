@@ -16,6 +16,7 @@ const style = {
   width: '100%',
   maxWidth: 3,
   height: 1,
+  flexGrow: 1,
   padding: 0.1,
   margin: 0.03,
 }

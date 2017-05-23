@@ -19,19 +19,18 @@ export default class wall_ui extends React.Component {
     this.state = { buzzList: null }
   }
 
-  // componentWillMount() {
-  //   getSomeBuzz().then(data => {
-  //     const { statuses } = data
-  //     this.setState({
-  //       buzzList: statuses.map(status => ({
-  //         profileImageUrl: status.user.profile_image_url,
-  //         userName: status.user.name,
-  //         userScreenName: status.user.screen_name,
-  //         text: status.text,
-  //       }))
-  //     })
-  //   })
-  // }
+  componentWillMount() {
+    getSomeBuzz().then(data => {
+      this.setState({
+        buzzList: data.map(status => ({
+          profileImageUrl: status.user.profile_image_url,
+          userName: status.user.name,
+          userScreenName: status.user.screen_name,
+          text: status.text,
+        }))
+      })
+    })
+  }
   //
   // // render() {
   // //   const { buzzList, positions } = this.state
@@ -97,44 +96,20 @@ export default class wall_ui extends React.Component {
 
   render() {
     const text = 'adsasdads asd asdja sdfhkjsn sdfjksdjfksd js dflksdjf sjdkfjsdf sjdfksjdfklsdf sjdflksjdf'
+    const { buzzList } = this.state
     return(
-      <View style={{ flexDirection: 'row' }}>
+      <View s>
         <Pano source={asset('chess-world.jpg')} />
-        <View>
-          <Box text={text} />
-          <Box text={text} />
-          <Box text={text} />
-          <Box text={text} />
-          <Box text={text} />
-          <Box text={text} />
-          <Box text={text} />
-        </View>
-        <View>
-          <Box text={text} />
-          <Box text={text} />
-          <Box text={text} />
-          <Box text={text} />
-          <Box text={text} />
-          <Box text={text} />
-          <Box text={text} />
-        </View>
-        <View>
-          <Box text={text} />
-          <Box text={text} />
-          <Box text={text} />
-          <Box text={text} />
-          <Box text={text} />
-          <Box text={text} />
-          <Box text={text} />
-        </View>
-        <View>
-          <Box text={text} />
-          <Box text={text} />
-          <Box text={text} />
-          <Box text={text} />
-          <Box text={text} />
-          <Box text={text} />
-          <Box text={text} />
+        <View style={{ width: '100%', flexDirection: 'column', height: 7, flexWrap: 'wrap' }}>
+          { buzzList && buzzList.map((buzz, index) => {
+              return (
+                <BuzzBox
+                  key={buzz.id_str}
+                  text={buzz.text}
+                  user={{ name: buzz.userName, screen_name: buzz.userScreenName, profileImageUrl: buzz.profileImageUrl }}
+                />
+              )
+          })}
         </View>
       </View>
     )
