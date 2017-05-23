@@ -22,13 +22,14 @@ export default class wall_ui extends React.Component {
     getSomeBuzz().then(data => {
       this.setState({
         buzzList: data.map(status => ({
+          createdAt: status.created_at,
           profileImageUrl: status.user.profile_image_url,
           userName: status.user.name,
           userScreenName: status.user.screen_name,
           text: status.text,
           metadata: {
-            retweet_count: status.retweet_count,
-            favorite_count: status.favorite_count
+            retweetCount: status.retweet_count,
+            favoriteCount: status.favorite_count,
           },
         }))
       })
@@ -46,6 +47,7 @@ export default class wall_ui extends React.Component {
               return (
                 <BuzzBox
                   key={buzz.id_str}
+                  createdAt={buzz.createdAt}
                   text={buzz.text}
                   user={{ name: buzz.userName, screen_name: buzz.userScreenName, profileImageUrl: buzz.profileImageUrl }}
                   metadata={buzz.metadata}

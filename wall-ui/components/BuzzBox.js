@@ -3,23 +3,36 @@ import PropTypes from 'prop-types'
 import { View, Text, Image, asset } from 'react-vr'
 
 class BuzzBox extends React.Component {
+  formatDate = (date) => {
+    var monthNames = [
+      "Jan.", "Feb.", "Mar.",
+      "Apr.", "May", "Jun.", "Jul.",
+      "Aug.", "Sep.", "Oct.",
+      "Nov.", "Dec."
+    ];
+
+    var day = date.getDate()
+    var monthIndex = date.getMonth()
+
+    return `${day} ${monthNames[monthIndex]}`
+  }
   render() {
-    const { text, user, metadata } = this.props
+    const { text, user, metadata, createdAt } = this.props
     return (
       <View style={[style, { transform: [{ translate: [-6, 3, -6] }] }]}>
         <View style={{ display: 'flex', flexDirection: 'row' }}>
           <Image source={{ uri: user.profileImageUrl }} style={{ width: 0.2, height: 0.2, marginRight: 0.1 }} />
-          <Text style={textStyle}>{`${user.name} @${user.screen_name}`}</Text>
+          <Text style={textStyle}>{`${user.name} @${user.screen_name} - ${this.formatDate(new Date(createdAt))}`}</Text>
         </View>
         <View><Text style={textStyle}>{text}</Text></View>
         <View style={metadataBoxStyle}>
           <View style={metadataStyle}>
             <Image source={asset('retweet.png')} style={iconStyle} />
-            {metadata.retweet_count > 0 ? <Text style={metadataTextStyle}>{metadata.retweet_count}</Text> : null}
+            {metadata.retweetCount > 0 ? <Text style={metadataTextStyle}>{metadata.retweetCount}</Text> : null}
           </View>
           <View style={metadataStyle}>
             <Image source={asset('heart.png')} style={iconStyle} />
-            {metadata.favorite_count > 0 ? <Text style={metadataTextStyle}>{metadata.favorite_count}</Text> : null}
+            {metadata.favoriteCount > 0 ? <Text style={metadataTextStyle}>{metadata.favoriteCount}</Text> : null}
           </View>
         </View>
       </View>
@@ -67,15 +80,17 @@ const metadataTextStyle = {
 
 BuzzBox.defaultProps = {
   metadata: {
-    favorite_count: 0,
-    retweet_count: 0,
+    favoriteCount: 0,
+    retweetCount: 0,
   },
+  createdAt: new Date().toString(),
 }
 
 BuzzBox.propTypes = {
   text: PropTypes.string.isRequired,
   user: PropTypes.object.isRequired,
   metadata: PropTypes.object,
+  createdAt: PropTypes.string,
 }
 
 export default BuzzBox
