@@ -2,28 +2,16 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { View, Text, Image, asset } from 'react-vr'
 
+// components
+import BoxProfileHeader from './BoxProfileHeader'
+
 class BuzzBox extends React.Component {
-  formatDate = (date) => {
-    var monthNames = [
-      "Jan.", "Feb.", "Mar.",
-      "Apr.", "May", "Jun.", "Jul.",
-      "Aug.", "Sep.", "Oct.",
-      "Nov.", "Dec."
-    ];
 
-    var day = date.getDate()
-    var monthIndex = date.getMonth()
-
-    return `${day} ${monthNames[monthIndex]}`
-  }
   render() {
     const { text, user, metadata, createdAt } = this.props
     return (
       <View style={[style, { transform: [{ translate: [-6, 3, -6] }] }]}>
-        <View style={{ display: 'flex', flexDirection: 'row' }}>
-          <Image source={{ uri: user.profileImageUrl }} style={{ width: 0.2, height: 0.2, marginRight: 0.1 }} />
-          <Text style={textStyle}>{`${user.name} @${user.screen_name} - ${this.formatDate(new Date(createdAt))}`}</Text>
-        </View>
+        <BoxProfileHeader user={user} createdAt={createdAt} />
         <View><Text style={textStyle}>{text}</Text></View>
         <View style={metadataBoxStyle}>
           <View style={metadataStyle}>
